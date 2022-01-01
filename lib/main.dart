@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import './question.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatefulWidget {
@@ -8,12 +10,12 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  var currentQuestionIndex = 0;
+  var _currentQuestionIndex = 0;
 
   void answerQuestion() {
     print('Answer selected!');
-    setState(() => currentQuestionIndex++);
-    print('Current question index is ${currentQuestionIndex}');
+    setState(() => _currentQuestionIndex++);
+    print('Current question index is ${_currentQuestionIndex}');
   }
 
   @override
@@ -32,7 +34,7 @@ class _MyAppState extends State<MyApp> {
           backgroundColor: Color(0xFF5DBB63),
         ),
         body: Column(children: [
-          Text(questions[currentQuestionIndex]),
+          Question(questions[_currentQuestionIndex]),
           RaisedButton(
             child: Text('Answer 1'),
             onPressed: answerQuestion,

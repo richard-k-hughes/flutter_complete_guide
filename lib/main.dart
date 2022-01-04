@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import './question.dart';
+import './answer.dart';
 
 void main() => runApp(MyApp());
 
@@ -12,7 +13,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   var _currentQuestionIndex = 0;
 
-  void answerQuestion() {
+  void _answerQuestion() {
     print('Answer selected!');
     setState(() => _currentQuestionIndex++);
     print('Current question index is ${_currentQuestionIndex}');
@@ -21,9 +22,23 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     var questions = [
-      'What\'s your favorite color?',
-      'How old are you?',
-      'Do you prefer dessert or entrees?'
+      {
+        'questionText': 'What\'s your favorite color?',
+        'answers': ['Blue', 'Green', 'Red', 'Black', 'Silver', 'White']
+      },
+      {
+        'questionText': 'How old are you?',
+        'answers': [
+          'None of your business',
+          'A basic zoomer',
+          'Pretty old',
+          '30\'s isn\'t old!'
+        ]
+      },
+      {
+        'questionText': 'Do you prefer dessert or entrees?',
+        'answers': ['Dessert!', 'Real Food']
+      },
     ];
     // var questionWidgetList = <Widget>[];
     // questions.forEach((question) => questionWidgetList.add(Text(question)));
@@ -34,19 +49,10 @@ class _MyAppState extends State<MyApp> {
           backgroundColor: Color(0xFF5DBB63),
         ),
         body: Column(children: [
-          Question(questions[_currentQuestionIndex]),
-          RaisedButton(
-            child: Text('Answer 1'),
-            onPressed: answerQuestion,
-          ),
-          RaisedButton(
-            child: Text('Answer 2'),
-            onPressed: answerQuestion,
-          ),
-          RaisedButton(
-            child: Text('Answer 3'),
-            onPressed: answerQuestion,
-          )
+          Question(questions[_currentQuestionIndex]['questionText']),
+          ...(questions[_currentQuestionIndex]['answers'] as List<String>)
+              .map((answer) => Answer(_answerQuestion, answer))
+              .toList(),
         ]),
       ),
     );

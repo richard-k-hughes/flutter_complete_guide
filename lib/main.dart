@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import './question.dart';
-import './answer.dart';
+import './quiz.dart';
+import './result.dart';
 
 void main() => runApp(MyApp());
 
@@ -25,7 +25,7 @@ class _MyAppState extends State<MyApp> {
     // "compile time constant"
     // inside of the baby components they would be final rather than const
     // they wont be modified in the component but wont be defined until runtime
-    const questions = [
+    const _questions = [
       {
         'questionText': 'What\'s your favorite color?',
         'answers': ['Blue', 'Green', 'Red', 'Black', 'Silver', 'White']
@@ -52,14 +52,13 @@ class _MyAppState extends State<MyApp> {
           title: Text('My First App'),
           backgroundColor: Color(0xFF5DBB63),
         ),
-        body: _currentQuestionIndex < questions.length
-            ? Column(children: [
-                Question(questions[_currentQuestionIndex]['questionText']),
-                ...(questions[_currentQuestionIndex]['answers'] as List<String>)
-                    .map((answer) => Answer(_answerQuestion, answer))
-                    .toList(),
-              ])
-            : Text('Thank you for completing our survey!'),
+        body: _currentQuestionIndex < _questions.length
+            ? Quiz(
+                answerQuestion: _answerQuestion,
+                questionIndex: _currentQuestionIndex,
+                questions: _questions,
+              )
+            : Result(),
       ),
     );
   }

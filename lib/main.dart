@@ -21,7 +21,11 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    var questions = [
+    // Since this is declared and instantiated then never changed we use const
+    // "compile time constant"
+    // inside of the baby components they would be final rather than const
+    // they wont be modified in the component but wont be defined until runtime
+    const questions = [
       {
         'questionText': 'What\'s your favorite color?',
         'answers': ['Blue', 'Green', 'Red', 'Black', 'Silver', 'White']
@@ -48,12 +52,14 @@ class _MyAppState extends State<MyApp> {
           title: Text('My First App'),
           backgroundColor: Color(0xFF5DBB63),
         ),
-        body: Column(children: [
-          Question(questions[_currentQuestionIndex]['questionText']),
-          ...(questions[_currentQuestionIndex]['answers'] as List<String>)
-              .map((answer) => Answer(_answerQuestion, answer))
-              .toList(),
-        ]),
+        body: _currentQuestionIndex < questions.length
+            ? Column(children: [
+                Question(questions[_currentQuestionIndex]['questionText']),
+                ...(questions[_currentQuestionIndex]['answers'] as List<String>)
+                    .map((answer) => Answer(_answerQuestion, answer))
+                    .toList(),
+              ])
+            : Text('Thank you for completing our survey!'),
       ),
     );
   }

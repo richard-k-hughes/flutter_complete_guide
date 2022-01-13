@@ -12,11 +12,13 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   var _currentQuestionIndex = 0;
+  var _totalScore = 0;
 
-  void _answerQuestion() {
-    print('Answer selected!');
+  void _answerQuestion(int score) {
+    // print('Answer selected!');
+    _totalScore += score;
     setState(() => _currentQuestionIndex++);
-    print('Current question index is ${_currentQuestionIndex}');
+    // print('Current question index is ${_currentQuestionIndex}');
   }
 
   @override
@@ -28,20 +30,30 @@ class _MyAppState extends State<MyApp> {
     const _questions = [
       {
         'questionText': 'What\'s your favorite color?',
-        'answers': ['Blue', 'Green', 'Red', 'Black', 'Silver', 'White']
+        'answers': [
+          {'text': 'Blue', 'score': 1},
+          {'text': 'Green', 'score': 2},
+          {'text': 'Red', 'score': 3},
+          {'text': 'Black', 'score': 4},
+          {'text': 'Silver', 'score': 5},
+          {'text': 'White', 'score': 4},
+        ]
       },
       {
         'questionText': 'How old are you?',
         'answers': [
-          'None of your business',
-          'A basic zoomer',
-          'Pretty old',
-          '30\'s isn\'t old!'
+          {'text': 'None of your business', 'score': 4},
+          {'text': 'A basic zoomer', 'score': 2},
+          {'text': 'Pretty old', 'score': 2},
+          {'text': '30\'s isn\'t old!', 'score': 2},
         ]
       },
       {
         'questionText': 'Do you prefer dessert or entrees?',
-        'answers': ['Dessert!', 'Real Food']
+        'answers': [
+          {'text': 'Dessert!', 'score': 2},
+          {'text': 'Real Food', 'score': 1}
+        ]
       },
     ];
     // var questionWidgetList = <Widget>[];
@@ -58,7 +70,7 @@ class _MyAppState extends State<MyApp> {
                 questionIndex: _currentQuestionIndex,
                 questions: _questions,
               )
-            : Result(),
+            : Result(_totalScore),
       ),
     );
   }

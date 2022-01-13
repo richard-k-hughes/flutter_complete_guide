@@ -21,6 +21,13 @@ class _MyAppState extends State<MyApp> {
     // print('Current question index is ${_currentQuestionIndex}');
   }
 
+  void _resetQuiz() {
+    setState(() {
+      _currentQuestionIndex = 0;
+      _totalScore = 0;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     // Since this is declared and instantiated then never changed we use const
@@ -70,7 +77,7 @@ class _MyAppState extends State<MyApp> {
                 questionIndex: _currentQuestionIndex,
                 questions: _questions,
               )
-            : Result(_totalScore),
+            : Result(_totalScore, _resetQuiz),
       ),
     );
   }
